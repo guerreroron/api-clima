@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Api-Clima Full Stack Python">
+    <meta name="author" content="Ronald Guerrero 0071">
+    <meta name="keywords" content="Api-clima Ajax Jquery Javascript Openweathermap">
+    <title>API-CLIMA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $('#btn_buscar').click(function(){
+                let getValue = $('#txt_city').val(); 
+                let str = getValue.toUpperCase();
+                const apikey = $('#apikey').val();
+                let url = `https://api.openweathermap.org/data/2.5/weather?q=${str}&appid=${apikey}&units=metric&lang=es`;               
+                
+                $('#city_h2').html(str);
+
+                console.log(str);
+                console.log(apikey);
+                console.log(url);
+                
+                $.get(url, function(data){
+                
+                    /* longitud */    console.log(data.coord.lon);
+                    /* latitud  */    console.log(data.coord.lat);
+                    /* cielo */       console.log(data.weather[0].description);
+                    /* temp-actual */ console.log(data.main.temp);
+                    /* temp-min */    console.log(data.main.temp_min);
+                    /* temp-max */    console.log(data.main.temp_max);
+                    /* presion  */    console.log(data.main.pressure);
+                    /* humedad */     console.log(data.main.humidity);
+                    /* viento */      console.log(data.wind.speed);
+                    /* direcc  */     console.log(data.wind.deg);
+                 
+                },'json');       
+
+            });
+        });
+    </script>
+    
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container-fluid p-5 bg-light">
+            <div class="container my-4">
+                <div class="row mb-4">
+                    <h4 class="fs-4">Aplicación del tiempo por ciudad</h4>
+                </div>
+                <form id="form1" action="#" method="GET">
+                    <div class="row">                    
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    
+                                    <h3 id="city_h2" class="card-title">Ciudad</h3>
+                                    <div class= "form-group mb-2">
+                                        <label class="font-weigth-bold" for="indicador">El tiempo en la ciudad buscada es:</label>
+                                                                
+                                    </div>    
+                                </div>
+                                <div class="card-body mb-3">
+                                    <p id="lon" class="card-text">Longitud: </p>
+                                    <p id="lat" class="card-text">Latitud: </p>
+                                    <p id="description" class="card-text">Cielo: </p>
+                                    <p id="temp" class="card-text">Temperatura actual (°C): </p> 
+                                    <p id="temp_min" class="card-text">Temp min (°C): </p>
+                                    <p id="temp_max" class="card-text">Temp max (°C): </p>
+                                    <p id="pressure" class="card-text">Presión (hPa): </p>
+                                    <p id="humidity" class="card-text">Humedad (%): </p>
+                                    <p id="speed" class="card-text">Veloc. viento (m/s): </p>
+                                    <p id="deg" class="card-text">Direc. viento (°): </p>
+
+                                </div>                             
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <label class="font-weigth-bold mt-0 ms-3" for="city">Escriba una ciudad</label>
+                            <input id="txt_city" class="form-control mt-2 mb-2 ms-3" type="text" name="city">
+                            
+                            <label class="font-weigth-bold mt-2 ms-3" for="Apikey">ingrese su Api-Key</label>
+                            <input class="form-control mt-2 mb-2 ms-3" type="password" name="apikey" id="apikey">
+
+                            <button id="btn_buscar" type="button" class="btn btn-info mt-4 ms-3">Buscar</button>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <pre>  https://openweathermap.org</pre>
+                        </div>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>
