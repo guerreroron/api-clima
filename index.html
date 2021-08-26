@@ -15,32 +15,47 @@
     <script>
         $(document).ready(function(){
 
-            $('#btn_buscar').click(function(){
-                let getValue = $('#txt_city').val(); 
-                let str = getValue.toUpperCase();
-                const apikey = $('#apikey').val();
-                let url = `https://api.openweathermap.org/data/2.5/weather?q=${str}&appid=${apikey}&units=metric&lang=es`;               
-                
-                $('#city_h2').html(str);
+                $('#btn_buscar').click(function(){
+                    let getValue = $('#txt_city').val(); 
+                    let str = getValue.toUpperCase();
+                    const apikey = $('#apikey').val();
+                    let url = `https://api.openweathermap.org/data/2.5/weather?q=${str}&appid=${apikey}&units=metric&lang=es`;               
+                    
+                    $('#city_h2').html(str);
 
-                console.log(str);
-                console.log(apikey);
-                console.log(url);
-                
-                $.get(url, function(data){
-                
-                    /* longitud */    console.log(data.coord.lon);
-                    /* latitud  */    console.log(data.coord.lat);
-                    /* cielo */       console.log(data.weather[0].description);
-                    /* temp-actual */ console.log(data.main.temp);
-                    /* temp-min */    console.log(data.main.temp_min);
-                    /* temp-max */    console.log(data.main.temp_max);
-                    /* presion  */    console.log(data.main.pressure);
-                    /* humedad */     console.log(data.main.humidity);
-                    /* viento */      console.log(data.wind.speed);
-                    /* direcc  */     console.log(data.wind.deg);
-                 
-                },'json');       
+                    console.log(str);
+                    console.log(apikey);
+                    console.log(url);
+                    
+                    $.get(url, function(data){
+                        
+                        let country = data.sys.country;
+                        let lon = data.coord.lon;
+                        let lat = data.coord.lat;
+                        let desc = data.weather[0].description
+                        let temp = data.main.temp;
+                        let tmin = data.main.temp_min;
+                        let tmax = data.main.temp_max;
+                        let press = data.main.pressure;
+                        let hum = data.main.humidity;
+                        let wind = data.wind.speed;
+                        let dir = data.wind.deg;
+                        let city = data.name;
+
+                        $('#country').html(country);
+                        $("#lon").html(lon);
+                        $("#lat").html(lat);
+                        $("#desc").html(desc);
+                        $("#temp").html(temp);
+                        $("#temp_min").html(tmin);
+                        $("#temp_max").html(tmax);
+                        $("#pressure").html(press);
+                        $("#humidity").html(hum);
+                        $("#speed").html(wind);
+                        $("#deg").html(dir);
+                        
+                    
+                    },'json');       
 
             });
         });
@@ -67,16 +82,53 @@
                                     </div>    
                                 </div>
                                 <div class="card-body mb-3">
-                                    <p id="lon" class="card-text">Longitud: </p>
-                                    <p id="lat" class="card-text">Latitud: </p>
-                                    <p id="description" class="card-text">Cielo: </p>
-                                    <p id="temp" class="card-text">Temperatura actual (°C): </p> 
-                                    <p id="temp_min" class="card-text">Temp min (°C): </p>
-                                    <p id="temp_max" class="card-text">Temp max (°C): </p>
-                                    <p id="pressure" class="card-text">Presión (hPa): </p>
-                                    <p id="humidity" class="card-text">Humedad (%): </p>
-                                    <p id="speed" class="card-text">Veloc. viento (m/s): </p>
-                                    <p id="deg" class="card-text">Direc. viento (°): </p>
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td><p class="card-text">Código País: </p></td>
+                                            <td class="table-light" id="country"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Longitud: </p></td>
+                                            <td class="table-light" id="lon"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Latitud: </p></td>
+                                            <td class="table-light" id="lat"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Cielo: </p></td>
+                                            <td class="table-light" id="desc"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Temperatura actual (°C): </p></td>
+                                            <td class="table-light" id="temp"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Temperatura min (°C): </p></td>
+                                            <td class="table-light" id="temp_min"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Temperatura max (°C): </p></td>
+                                            <td class="table-light" id="temp_max"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Presión (hPa): </p></td>
+                                            <td class="table-light" id="pressure"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Humedad (%): </p></td>
+                                            <td class="table-light" id="humidity"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Velocidad de viento (m/s): </p></td>
+                                            <td class="table-light" id="speed"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="card-text">Dirección del viento (grados): </p></td>
+                                            <td class="table-light" id="deg"></td>
+                                        </tr>
+                                            
+                                    </table>
 
                                 </div>                             
                             </div>
@@ -87,8 +139,16 @@
                             
                             <label class="font-weigth-bold mt-2 ms-3" for="Apikey">ingrese su Api-Key</label>
                             <input class="form-control mt-2 mb-2 ms-3" type="password" name="apikey" id="apikey">
-
-                            <button id="btn_buscar" type="button" class="btn btn-info mt-4 ms-3">Buscar</button>
+                        <div class="row d-flex justify-content-around">
+                            <div class="col-5 d-grid gap-2">
+                                <button id="btn_buscar" type="button" class="btn btn-outline-secondary btn-md mt-4 ms-3">Buscar</button>
+                            </div>
+                            <div class="col-5 d-grid gap-2">
+                                <button class="btn btn-outline-secondary btn-md mt-4 ms-3" id="reset" type="reset">Reset</button>
+                            </div>                            
+                        </div>                  
+                            <br>
+                            <br>
                             <br>
                             <br>
                             <br>
